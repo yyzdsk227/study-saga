@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "../components/Post";
-import { getpost, clearpost } from "../modules/posts";
+import { getpost, clearpost, myhome } from "../modules/posts";
 import { reducerUtils } from "../lib/asyncUtils";
 
 function PostContainer({ postId }) {
@@ -23,7 +23,12 @@ function PostContainer({ postId }) {
 
   return (
     <div>
-      <Post post={data} />
+      <Post
+        onClick={() => {
+          dispatch(myhome());
+        }}
+        post={data}
+      />
     </div>
   );
 }

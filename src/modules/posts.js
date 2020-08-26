@@ -5,8 +5,11 @@ import {
   handleAsyncActions,
   createPromiseThunkId,
   handleAsyncActionsId,
+  createPromiseSaga,
+  createPromiseSagaId,
 } from "../lib/asyncUtils";
 import { version } from "react-dom";
+import { delay, put, call, takeEvery, getContext } from "redux-saga/effects";
 
 const get_posts = "get_posts";
 const get_posts_success = "get_posts_success";
@@ -18,66 +21,31 @@ const get_post_error = "get_post_error";
 
 const clear_post = "clear_post";
 
-export const getposts = createPromiseThunk(get_posts, postsApi.getPosts);
-export const getpost = createPromiseThunkId(get_post, postsApi.getPostbyId);
-// export const getpost = (id) => {
-//   return async (dispatch) => {
-//     dispatch({ type: get_post, meta: id });
-//     const payload = await postsApi.getPostbyId(id);
-//     try {
-//       dispatch({
-//         type: get_post_success,
-//         payload,
-//         meta: id,
-//       });
-//     } catch (e) {
-//       dispatch({
-//         type: get_post_error,
-//         payload: e,
-//         error: true,
-//         meta: id,
-//       });
-//     }
-//   };
-// };
+const go_home = "go_home";
+
+export const getposts = () => ({ type: get_posts });
+export const getpost = (id) => ({ type: get_post, payload: id, meta: id });
+
+export const getpostsSaga = createPromiseSaga(get_posts, postsApi.getPosts);
+export const getpostSaga = createPromiseSagaId(get_post, postsApi.getPostbyId);
+
+export const myhome = () => ({ type: go_home });
+
+function* gomyHome(action) {
+  const history = yield getContext("history");
+  history.push("/");
+}
+
+export function* postSaga() {
+  yield takeEvery(get_posts, getpostsSaga);
+  yield takeEvery(get_post, getpostSaga);
+  yield takeEvery(go_home, gomyHome);
+}
 
 export const clearpost = () => ({ type: clear_post });
 
 const getPostsReducer = handleAsyncActions(get_posts, "posts", true);
-//const getPostReducer = handleAsyncActionsId(get_post, "post", true);
-
-const getPostReducer = (state, action) => {
-  const id = action.meta;
-  switch (action.type) {
-    case get_post:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          [id]: reducerUtils.loadding(state.post[id] && state.post[id].data),
-        },
-      };
-    case get_post_success:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          [id]: reducerUtils.success(action.payload),
-        },
-      };
-    //
-    case get_posts:
-      return {
-        ...state,
-        post: {
-          ...state.post,
-          [id]: reducerUtils.error(action.payload),
-        },
-      };
-    default:
-      return state;
-  }
-};
+const getPostReducer = handleAsyncActionsId(get_post, "post", true);
 
 const initialState = {
   posts: reducerUtils.initial(),

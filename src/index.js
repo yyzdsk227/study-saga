@@ -5,26 +5,37 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import rootreducer from "./modules/index";
+import rootreducer, { rootSaga } from "./modules/index";
 // import mylogger from "./middleware/mylogger";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from "redux-thunk";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Router } from "react-router-dom";
+import createSagaMiddleware from "redux-saga";
+import { createBrowserHistory } from "history";
+
+const customhistory = createBrowserHistory();
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history: customhistory,
+  },
+});
 
 const store = createStore(
   rootreducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk, logger))
+  composeWithDevTools(applyMiddleware(ReduxThunk, sagaMiddleware, logger))
 );
 
+sagaMiddleware.run(rootSaga);
+
 ReactDOM.render(
-  <BrowserRouter>
+  <Router history={customhistory}>
     <Provider store={store}>
       <React.StrictMode>
         <App />
       </React.StrictMode>
     </Provider>
-  </BrowserRouter>,
+  </Router>,
 
   document.getElementById("root")
 );

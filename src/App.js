@@ -11,6 +11,7 @@ import PostListPage from "./pages/PostListPage";
 function App() {
   return (
     <>
+      <CounterContainer />
       <Route path="/" component={PostListPage} exact={true} />
       <Route path="/:id" component={PostPage} />
     </>

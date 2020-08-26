@@ -1,3 +1,5 @@
+import { call, put, delay } from "redux-saga/effects";
+
 export const createPromiseThunk = (type, promiseCreator) => {
   const [success, error] = [`${type}_success`, `${type}_error`];
 
@@ -12,6 +14,26 @@ export const createPromiseThunk = (type, promiseCreator) => {
       });
     } catch (e) {
       dispatch({
+        type: error,
+        payload: e,
+        error: true,
+      });
+    }
+  };
+};
+
+export const createPromiseSaga = (type, promiseCreator) => {
+  const [success, error] = [`${type}_success`, `${type}_error`];
+
+  return function* (action) {
+    try {
+      const payload = yield call(promiseCreator, action.payload);
+      yield put({
+        type: success,
+        payload,
+      });
+    } catch (e) {
+      yield put({
         type: error,
         payload: e,
         error: true,
@@ -43,6 +65,30 @@ export const createPromiseThunkId = (
       });
     } catch (e) {
       dispatch({
+        type: error,
+        payload: e,
+        error: true,
+        meta: id,
+      });
+    }
+  };
+};
+
+export const createPromiseSagaId = (type, promiseCreator) => {
+  const [success, error] = [`${type}_success`, `${type}_error`];
+
+  return function* (action) {
+    const id = action.meta;
+
+    try {
+      const payload = yield call(promiseCreator, action.payload);
+      yield put({
+        type: success,
+        payload,
+        meta: id,
+      });
+    } catch (e) {
+      yield put({
         type: error,
         payload: e,
         error: true,
