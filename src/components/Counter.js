@@ -1,6 +1,6 @@
 import React from "react";
 
-function Counter({ number, lotto, onincrease, ondecrease }) {
+function Counter({ number, lotto7, lotto, onincrease, ondecrease }) {
   return (
     <div>
       <h1
@@ -17,7 +17,7 @@ function Counter({ number, lotto, onincrease, ondecrease }) {
             cursor: "pointer",
             border: "3px dotted skyblue",
             borderRadius: "1Rem",
-            top: "8%",
+            top: "18%",
             position: "absolute",
             left: "50%",
             transform: "translate(-50%)",
@@ -32,13 +32,13 @@ function Counter({ number, lotto, onincrease, ondecrease }) {
         <a
           href="/"
           style={{
-            top: "8%",
+            top: "18%",
             position: "absolute",
             left: "50%",
             transform: "translate(-50%)",
           }}
         >
-          다시하기
+          {`행운의 번호들: ${lotto7} && 다시하기`}
         </a>
       )}
       {/* <button onClick={ondecrease}>-1</button> */}

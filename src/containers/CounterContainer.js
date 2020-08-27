@@ -27,6 +27,7 @@ const CounterContainer = memo(() => {
     <div>
       <Counter
         number={counterCtr.number}
+        lotto7={counterCtr.lotto7}
         lotto={
           counterCtr.loading === true ? (
             <AnimatedProgressProvider
