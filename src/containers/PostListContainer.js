@@ -17,7 +17,7 @@ const PostListContainer = () => {
   if (!data) return null;
 
   return (
-    <div>
+    <div style={{ position: "absolute", top: "1%", left: "1%" }}>
       <PostList posts={data} />
     </div>
   );

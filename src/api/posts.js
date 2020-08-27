@@ -1,13 +1,13 @@
 const sleep = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
 const posts = [
-  { id: 1, title: "learn redux", body: "learn redux pick me up" },
+  { id: 1, title: "lotto guide", body: "클릭시 4.321초후 번호 추첨됨" },
 
-  { id: 2, title: "learn redux-thunk", body: "learn redux-thunk 2pick" },
+  { id: 2, title: "learn thunk", body: "learn redux-thunk 2pick" },
 
   {
     id: 3,
-    title: "learn redux-saga",
+    title: "learn saga",
     body: "learn redux-saga 1pick",
   },
 ];

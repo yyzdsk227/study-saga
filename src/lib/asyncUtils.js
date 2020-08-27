@@ -1,4 +1,4 @@
-import { call, put, delay } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 
 export const createPromiseThunk = (type, promiseCreator) => {
   const [success, error] = [`${type}_success`, `${type}_error`];

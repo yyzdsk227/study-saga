@@ -10,7 +10,7 @@ import rootreducer, { rootSaga } from "./modules/index";
 import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import ReduxThunk from "redux-thunk";
-import { BrowserRouter, Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import createSagaMiddleware from "redux-saga";
 import { createBrowserHistory } from "history";
 

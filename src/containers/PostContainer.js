@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "../components/Post";
-import { getpost, clearpost, myhome } from "../modules/posts";
+import { getpost, myhome } from "../modules/posts";
 import { reducerUtils } from "../lib/asyncUtils";
 
 function PostContainer({ postId }) {
@@ -22,7 +22,7 @@ function PostContainer({ postId }) {
   if (!data) return null;
 
   return (
-    <div>
+    <div style={{ position: "absolute", top: "1%", left: "1%" }}>
       <Post
         onClick={() => {
           dispatch(myhome());
